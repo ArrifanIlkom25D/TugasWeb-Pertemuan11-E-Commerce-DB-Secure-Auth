@@ -1,70 +1,57 @@
-# Tugas Rutin 11 — E-Commerce DB + Secure Auth (Laravel + Breeze)
+# Tugas Rutin 11 — E-Commerce DB + Secure Auth
 
-## Struktur file → letakkan di project Laravel kamu
-| File di folder ini | Salin ke project |
-|---|---|
-| `database/migrations/*` | `database/migrations/` |
-| `database/factories/ProductFactory.php` | `database/factories/` |
-| `database/seeders/*` | `database/seeders/` (timpa DatabaseSeeder) |
-| `app/Models/*` | `app/Models/` (timpa User.php) |
-| `app/Http/Middleware/RoleMiddleware.php` | `app/Http/Middleware/` |
-| `app/Http/Controllers/*` | `app/Http/Controllers/` (timpa Controller.php) |
-| `app/Policies/ProductPolicy.php` | `app/Policies/` |
-| `bootstrap/app.php` | **jangan ditimpa buta** — cukup tambahkan alias `role` ke file aslimu |
-| `routes/web.php` | `routes/web.php` (timpa) |
-| `resources/views/products/*` | `resources/views/products/` |
-| `tests/Feature/RoleAccessTest.php` | `tests/Feature/` |
+**Nama:** Arrifan Ryansyah
+**NIM:** 4253250019
+**Mata Kuliah:** Pemrograman Web — Pertemuan 11
+**Framework:** Laravel + Breeze (Blade) + MySQL
 
-## Langkah eksekusi (urut)
+## Deskripsi
+Aplikasi e-commerce sederhana dengan database 7 tabel, relasi Eloquent, seeder 54 produk realistis, autentikasi Laravel Breeze, sistem multi-role (admin / editor / user), custom middleware, dan Policy untuk otorisasi edit/hapus produk.
 
-### 0. Persiapan
+## Struktur Database (7 tabel)
+`categories`, `brands`, `products`, `orders`, `order_items`, `reviews`, `cart_items`, serta tabel `users` yang diberi kolom `role`. Semua relasi memakai foreign key constraint.
+
+## Cara Menjalankan
 ```bash
-composer create-project laravel/laravel TugasWeb-P11-EcommerceAuth
-cd TugasWeb-P11-EcommerceAuth
-# atur DB di .env (mis. DB_CONNECTION=mysql, DB_DATABASE=ecommerce_p11) lalu buat databasenya
-```
-
-### 1. Install Breeze (Bagian B.5)  — lakukan SEBELUM menyalin file
-```bash
-composer require laravel/breeze --dev
-php artisan breeze:install blade
-npm install && npm run build
-```
-
-### 2. Salin semua file dari tabel di atas
-
-### 3. Migrate + seed (Bagian A.1 & A.2)
-```bash
+composer install
+npm install
+npm run build
+cp .env.example .env
+php artisan key:generate
+# buat database `ecommerce_p11` di MySQL, lalu atur DB_DATABASE di .env
 php artisan migrate:fresh --seed
-```
-Akun uji (password: `password`): `admin@example.com`, `editor@example.com`, `user@example.com`
-
-### 4. Tinker (A.4) → ikuti `docs/A4_tinker_queries.md`, screenshot hasilnya
-
-### 5. Jalankan & uji manual (B.8)
-```bash
 php artisan serve
 ```
-- Window biasa: login **admin** → bisa tambah/edit/hapus semua produk, buka `/admin`
-- Window **incognito**: login **user** → tombol edit/hapus tidak muncul; buka `/products/create` → **403**
-- Tes editor: hanya bisa edit/hapus produk miliknya (`user_id` = dia), `/admin` → 403
-- Tanpa login buka `/products` → redirect ke `/login`
+Buka `http://127.0.0.1:8000`.
 
-### 6. Automated test
-```bash
-php artisan test --filter=RoleAccessTest
-```
+## Akun Uji
+Password semua akun: `password`
 
-### 7. Git
-```bash
-git init && git add . && git commit -m "Tugas P11 e-commerce auth"
-# buat repo GitHub bernama: TugasWeb-P11-EcommerceAuth, lalu push
-```
+| Email | Role | Hak Akses |
+|---|---|---|
+| admin@example.com | admin | Kelola semua produk, akses `/admin` |
+| editor@example.com | editor | Tambah produk, edit/hapus hanya produk miliknya |
+| user@example.com | user | Hanya melihat daftar produk |
 
-## Bonus
-- Filament: `composer require filament/filament` → `php artisan filament:install --panels` → `php artisan make:filament-user`
-  (agar admin-only, tambahkan `canAccessPanel()` di User.php yang return `$this->isAdmin()`, dan `implements FilamentUser`)
-- Eager loading demo: sudah ada di `docs/A4_tinker_queries.md` dan `ProductController@index`
+## Fitur per Bagian Tugas
+
+### Bagian A — Database & Eloquent
+1. **Migrations** 7 tabel e-commerce + FK constraint (`database/migrations`)
+2. **Seeder + Factory** 54 produk realistis (`database/seeders`, `database/factories`)
+3. **Model + Relationships + Scope** (`app/Models`), scope `active()` dan `cheaperThan()` pada `Product`
+4. **5 Query Tinker** (dokumentasi: `docs/A4_tinker_queries.md`)
+
+### Bagian B — Auth & Security
+5. **Laravel Breeze** (login, register, logout)
+6. **Multi-role + Custom Middleware** (`app/Http/Middleware/RoleMiddleware.php`), dipakai sebagai `role:admin,editor`
+7. **Policy** otorisasi edit/hapus (`app/Policies/ProductPolicy.php`)
+8. **Route Protection** (`routes/web.php`) dan pengujian dua role di incognito
+
+### Bonus
+- Demo eager loading vs N+1 (21 query menjadi 2 query)
+
+## Bukti Pengujian
+Screenshot hasil pengujian ada di file terpisah: **[BUKTI-PENGUJIAN.md](BUKTI-PENGUJIAN.md)**
 
 ## Catatan
-Soal menyebut **PostPolicy**; di sini objeknya produk, jadi dinamai `ProductPolicy`. Kalau dosen mewajibkan nama itu, ganti nama class/file dan modelnya saja.
+Objek yang dilindungi policy adalah `Product`, sehingga policy dinamai `ProductPolicy` (setara PostPolicy pada materi).
