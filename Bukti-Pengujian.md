@@ -1,3 +1,10 @@
+<img width="602" height="101" alt="Admin 1-2" src="https://github.com/user-attachments/assets/09736ee8-8dca-4920-a214-d3a7666aada9" />
+<img width="605" height="233" alt="Admin 1-1" src="https://github.com/user-attachments/assets/4ddf1550-6692-4171-af92-08bce4b1f554" />
+<img width="632" height="292" alt="Admin 1-0" src="https://github.com/user-attachments/assets/b1288226-fcc1-4316-bd90-117a1f6876df" />
+<img width="632" height="290" alt="Tabel Produk Pelanggan " src="https://github.com/user-attachments/assets/aeba18ec-1940-4b9e-a745-96c6d17cb880" />
+<img width="630" height="290" alt="Tabel Produk 2" src="https://github.com/user-attachments/assets/12e101d4-69a0-410d-aac5-c73d5fa2be32" />
+<img width="629" height="292" alt="Tabel Prduk 1" src="https://github.com/user-attachments/assets/c98654c3-1485-4823-94e7-e14d600f7b76" />
+<img width="629" height="319" alt="Tabel Admin Dan Pelanggan" src="https://github.com/user-attachments/assets/10e099f9-6fe9-4f66-9c6b-356a6382eaec" />
 <img width="402" height="207" alt="Kategori 1" src="https://github.com/user-attachments/assets/a36d4b8f-a4d8-4aed-879d-1c01662c43bb" />
 <img width="401" height="143" alt="kategori 15" src="https://github.com/user-attachments/assets/8dd9d8fa-8325-4e83-94fc-e98af3165328" />
 <img width="400" height="139" alt="Kategori 14" src="https://github.com/user-attachments/assets/0e9aa0e1-b6cc-4761-b369-061987579e55" />
